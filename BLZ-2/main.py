@@ -38,7 +38,7 @@ def main():
     if args.server_name:
         server_url = args.server_name[0]
     else:
-        server_url = "https://www.apiblzapp.ml"
+        server_url = "https://www.apiblzapp.tk"
 
     logging.info("Server name is set to: {0}".format(server_url))
 
