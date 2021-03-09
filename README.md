@@ -3,7 +3,7 @@
 Build instructions:
 
 A. Clone the Repo. 
-B. Docker Build
+B. Docker Build.
 C. Lauching commands: python main.py -M 500 20 10 4 -A 30 OR Python main.py -A 30
    parameters meaning: -M x y z t to fit a new model on start. 
                         :params embedding size, window size, minimum word occurence, numbers of workers
