@@ -9,6 +9,7 @@ B. Docker Build.
 C. Lauching commands: python main.py -M 500 20 10 4 -A 30 OR Python main.py -A 30
    
    parameters' meaning: 
+                        
                         -M x y z t to fit a new model. 
                         :params x=embedding size, y=window size, z=minimum word occurence, t=numbers of workers/threads.
                         
