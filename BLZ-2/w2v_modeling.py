@@ -85,14 +85,19 @@ class W2V:
         for i in range(self.epochs):
 
             # try to fix the pymongo.error, OperationFailure.
-            try:
-                sent_ite_train = iter(self.IterMong(self.L2M.find().sort([("id", -1)])))
-            except Exception:
-                logging.warning("an exception due to pymongo.errors")
-                time.sleep(50)
-                sent_ite_train = iter(self.IterMong(self.L2M.find().sort([("id", -1)])))
+            while True:
+                i = 0
+                try:
+                    sent_ite_train = iter(self.IterMong(self.L2M.find().sort([("id", -1)])))
+                except Exception:
+                    logging.warning("an exception due to pymongo.errors")
+                    time.sleep(50)
+                    sent_ite_train = iter(self.IterMong(self.L2M.find().sort([("id", -1)])))
+                    i+=1
+                    if i == 5: 
+                        raise ConnectionError('pymongo.errors')
 
-            self.model.train(sent_ite_train, total_examples=self.L2M.count_documents({}) - 10000, epochs=1)
+            self.model.train(sent_ite_train, total_examples=self.L2M.count_documents({})*36, epochs=1)
 
         self.model.save(self.model_path)
 

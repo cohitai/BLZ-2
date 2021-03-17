@@ -84,7 +84,7 @@ def main():
 
     if args.predict:
 
-        sim.create_test_df_sample(1, path_data_exclusion)
+        sim.create_test_df_sample(360, path_data_exclusion)
         sim.add_average_vector()
 
         logging.info("creating a prediction: ")

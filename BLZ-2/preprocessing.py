@@ -45,13 +45,6 @@ def edit_data_frame(df):
     return df
 
 
-def load_data_frame():
-
-    """function loads an existing data frame."""
-
-    return pd.read_csv("/home/blz/Desktop/output/df.csv", index_col=0)
-
-
 def clean_text(path):
 
     """function cleans text.
