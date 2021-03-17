@@ -18,7 +18,7 @@ C. Lauching commands: python main.py -M 500 20 10 4 -A 30 OR Python main.py -A 3
                         
                         -S To set the inner struture of directories, relevant only for the first run.
                         
-                        -R,V visualizations to produce graphs. Do not work since it wasn't updated since the first version. 
+                        -R,V visualizations to produce graphs. Does not work since it wasn't updated from the first version. 
                         
                         -P prediction. For testing purposes, generates one prediction and quits. 
                         
