@@ -100,7 +100,7 @@ class Similarity:
         for v in averages_list:
             sum_temp += v
 
-        # the case of an empty text may occur when the article becomes empty after the prepossessing filtering.
+        # the case of an empty text which may occur when the article becomes empty after the prepossessing filtering.
 
         if number_of_sentences == 0:
             return sum_temp
