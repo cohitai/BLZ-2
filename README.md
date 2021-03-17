@@ -31,7 +31,7 @@ CMD python.py -S -M 500 20 10 4 -A 50
 
 5. Push the Image to GCP Container repos. (Docker tag, docker push). Run with GKE using the file from deployments protoypes with "kubectl apply -f <Deployment file>"
 
-Else, run on a seperate VM with Docker run <image>.
+Else, run on a seperate VM with Docker RUN <image>.
 
 
 
