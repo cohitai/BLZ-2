@@ -12,14 +12,15 @@ import os
 """ Web- application for Berliner-Zeitung:
     V 2.0.0  
 
-    consists of 5 objects/modules plus a main function to generates recommendations by similarity. 
+    consists of 6 objects/modules plus a main function to generates recommendations by similarity. 
 
     Units: 
         1. preprocessing.py (Module)
         2. w2v_modeling_v2.py (Object)
         3. similarity_functions_v2.py (Object)
         4. visualization.py (Object)
-        5. automation.py (Object) automate the model uploading procedure. """
+        5. automation.py (Object) automate the model uploading procedure.
+        6. LSH.py (object) local sensitive hashing for fast search."""
 
 
 def main():

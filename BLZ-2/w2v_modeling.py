@@ -98,7 +98,7 @@ class W2V:
                     if i == 5: 
                         raise ConnectionError('pymongo.errors')
 
-            self.model.train(sent_ite_train, total_examples=int(client.Livingdocs.articles_sqlike.find({}).count()*32.5), epochs=1)
+            self.model.train(sent_ite_train, total_examples=int(self.L2M.find({}).count()*32.5), epochs=1)
 
         self.model.save(self.model_path)
 
