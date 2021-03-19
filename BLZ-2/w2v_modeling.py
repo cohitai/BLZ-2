@@ -89,6 +89,7 @@ class W2V:
                 i = 0
                 try:
                     sent_ite_train = iter(self.IterMong(self.L2M.find().sort([("id", -1)])))
+                    break
                 except Exception:
                     logging.warning("an exception due to pymongo.errors")
                     time.sleep(50)
@@ -97,7 +98,8 @@ class W2V:
                     if i == 5: 
                         raise ConnectionError('pymongo.errors')
 
-            self.model.train(sent_ite_train, total_examples=self.L2M.count_documents({})*36, epochs=1)
+            #self.model.train(sent_ite_train, total_examples=self.L2M.count_documents({})*36, epochs=1)
+            self.model.train(sent_ite_train, total_examples=int(client.Livingdocs.articles_sqlike.find( { }).count()*32.5), epochs=1)
 
         self.model.save(self.model_path)
 

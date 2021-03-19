@@ -107,12 +107,6 @@ class Similarity:
         else:
             return sum_temp / number_of_sentences
 
-    def add_average_vector(self):
-
-        """method to compute and to add the average vector feature"""
-
-        self.df["Average_vector"] = self.df["Tokenized_sents"].apply(self.sentence_to_avg)
-
     def find_similar_article(self, n, k):
 
         """function finds k similar articles to an article with index n;
@@ -137,6 +131,11 @@ class Similarity:
             self.i2docid(i): [self.docid_url_dict()[self.i2docid(tup[0])] for tup in self.find_similar_article(i, k)][
                              ::-1] for i in range(self.df.shape[0])}
 
+
+
+    #decorator for predict#
+
+
     def i2docid(self, i):
         return self.df.iloc[i]["id"]
 
@@ -154,10 +153,11 @@ class Similarity:
         delt = (datetime.now() - timedelta(days=d)).isoformat() + "Z"
         with open(path_exclusion + 'ext.pkl', 'rb') as f:
              ex_list = pickle.load(f)
-        cur = self.L2M.find({"publishdate": {"$gte": delt}, "language": "German", "id": {"$nin": ex_list}})
-        # cur = self.L2M.find({"publishdate": {"$gte": delt}, "language": "German"})
+        cur = self.L2M.find({"publishdate": {"$gte": delt}, "language": "German", "id": {"$nin": ex_list}}, {'_id': 0, 'id': 1 , 'text': 1, 'lead': 1, 'title': 1, 'url': 1})
         df = pd.DataFrame(list(cur))
         df["Full Text"] = df["title"] + ' ' + df["lead"] + ' ' + df["text"]
         df["Tokenized_sents"] = df["Full Text"].apply(nltk.sent_tokenize)
         df["Tokenized_sents"] = df["Tokenized_sents"].apply(pp.clean_text_from_text)
+        df["Average_vector"] = df["Tokenized_sents"].apply(self.sentence_to_avg)
+
         self.df = df

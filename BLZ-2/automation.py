@@ -27,7 +27,6 @@ class AutoServer:
 
             # create a database.
             self.similarity.create_test_df_sample(days, self.path_exclusion)
-            self.similarity.add_average_vector()
 
             # create a json file for prediction
             pickle.dump(self.similarity.predict(k=6), open(self.path_prediction + 'model.pkl', 'wb'))

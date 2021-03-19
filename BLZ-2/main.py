@@ -27,7 +27,9 @@ def main():
     parser.add_argument("-A", "--automate", help="automate server by time", nargs='+', type=int)
     parser.add_argument("-D", "--server_name", help="initiate domain name", nargs='+', type=str)
     parser.add_argument("-M", "--fit", help="train the model", nargs='+', type=int)
-    parser.add_argument("-P", "--predict", help="make a prediction", action="store_true")
+    parser.add_argument("-P", "--predict", help="make a prediction", nargs='+', type=int)
+    parser.add_argument("-sa1", "--algorithm_1", help="choose algorithm: False (default) for full search, True for LSH", nargs='+', type=bool)
+    parser.add_argument("-sa2", "--algorithm_2", help="choose storing method: False (default) for regular caching, True for http", nargs='+', type=bool)
     parser.add_argument("-R", "--report", help="create visual report", action="store_true")
     parser.add_argument("-S", "--set", help="set workspace directories", action="store_true")
     parser.add_argument("-V", "--visualization", help="show visual report", action="store_true")
@@ -84,9 +86,7 @@ def main():
 
     if args.predict:
 
-        sim.create_test_df_sample(360, path_data_exclusion)
-        sim.add_average_vector()
-
+        sim.create_test_df_sample(args.predict[0], path_data_exclusion)
         logging.info("creating a prediction: ")
 
         # pickling
@@ -96,8 +96,6 @@ def main():
     if args.visualization:
 
         sim.create_test_df_sample(1, path_data_exclusion)
-        sim.add_average_vector()
-
         visualizer = vis.Visualization(model.model)
 
         # Report "-R"
@@ -121,7 +119,7 @@ def main():
 
     if args.automate:
         automation = aut.AutoServer(server_url, model, sim, path_data_prediction, path_data_exclusion)
-        automation.automate(t=1200, s=50, days=args.automate[0])
+        automation.automate(t=1200, s=50, days=args.automate[0], p_bool=args.algorithm_2.args)
 
 
 if __name__ == "__main__":
