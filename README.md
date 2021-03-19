@@ -22,6 +22,11 @@ C. Lauching commands: python main.py -M 500 20 10 4 -A 30 OR Python main.py -A 3
                         
                         -P prediction. For testing purposes, generates one prediction and quits. 
                         
+                        -sa1 Full/fast search (booliean): False (default) for full search, True for LSH.
+                         
+                        -sa2 Serving method. False (default) for regular caching, True for http".
+   
+                        
                         
                         
 4. On first build use the docker file with "Docker build" and replace the last CMD with the following: 
