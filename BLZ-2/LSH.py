@@ -3,7 +3,7 @@ import logging
 import math
 
 # dev
-np.random.seed(0)
+#np.random.seed(0)
 
 #####
 # PARAMETERS #
@@ -11,12 +11,15 @@ np.random.seed(0)
 
 
 class LSH:
+
+    """class to apply LSH search"""
     
     def __init__(self, df, model):
         self.word_vectors = model.wv
-
         self.df = df
         self.df_url = df.set_index('id').to_dict()['url']
+        # mat is a matrix with first column docids
+        # and second column word vectors (docids | wv ) . Its dimension is (sample size, 2)
         self.mat = np.hstack((self.df['id'].to_numpy()[:, np.newaxis], self.df['Average_vector'].to_numpy()[:, np.newaxis]))
         self.number_of_buckets = int(self.mat.shape[0]/8)
         self.N_UNIVERSES = 25
@@ -33,20 +36,20 @@ class LSH:
         logging.info('Number of universes:{}'.format(self.N_UNIVERSES))
         logging.info('Number of dimensions:{}'.format(self.N_DIMS))
 
-#####
+
     @staticmethod
     def hash_value_of_vector(v, planes):
         """Create a hash for a vector; hash_id says which random hash to use.
         Input:
-            - v:  vector of a text. It's dimension is (1, N_DIMS)
+            - v:  vector of an article. It's dimension is (1, N_DIMS)
             - planes: matrix of dimension (N_DIMS, N_PLANES) - the set of planes that divide up the region
         Output:
             - res: a number which is used as a hash for your vector
 
         """
         # for the set of planes,
-        # calculate the dot product between the vector and the matrix containing the planes
-        # remember that planes has shape (300, 10)
+        # calculate the dot product between the vector and the matrix containing the planes.
+        # planes has shape (300, 10)
         # The dot product will have the shape (1,10)
         dot_product = np.dot(v, planes)
 
@@ -111,7 +114,7 @@ class LSH:
         self.hash_tables = []
         self.id_tables = []
 
-        for universe_id in range(self.N_UNIVERSES):  # there are 25 hashes
+        for universe_id in range(self.N_UNIVERSES):
             logging.info('working on hash universe #: {}'.format(universe_id))
             planes = self.planes_l[universe_id]
             hash_table, id_table = self.make_hash_table(self.mat, planes)

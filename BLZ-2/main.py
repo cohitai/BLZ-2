@@ -28,8 +28,8 @@ def main():
     parser.add_argument("-D", "--server_name", help="initiate domain name", nargs='+', type=str)
     parser.add_argument("-M", "--fit", help="train the model", nargs='+', type=int)
     parser.add_argument("-P", "--predict", help="make a prediction", nargs='+', type=int)
-    parser.add_argument("-sa1", "--algorithm_1", help="choose algorithm: False (default) for full search, True for LSH", nargs='+', type=bool)
-    parser.add_argument("-sa2", "--algorithm_2", help="choose storing method: False (default) for regular caching, True for http", nargs='+', type=bool)
+    parser.add_argument("-sa1", "--algorithm_1", help="choose algorithm: False (default) for full search, True for LSH", nargs='+', type=bool, default=False)
+    parser.add_argument("-sa2", "--algorithm_2", help="choose storing method: False (default) for regular caching, True for http", nargs='+', type=bool, default=False)
     parser.add_argument("-R", "--report", help="create visual report", action="store_true")
     parser.add_argument("-S", "--set", help="set workspace directories", action="store_true")
     parser.add_argument("-V", "--visualization", help="show visual report", action="store_true")
@@ -88,9 +88,10 @@ def main():
 
         sim.create_test_df_sample(args.predict[0], path_data_exclusion)
         logging.info("creating a prediction: ")
-
         # pickling
         pickle.dump(sim.predict(k=6), open(path_data_prediction + 'model.pkl', 'wb'))
+
+
 
     # Visualization "-V"
     if args.visualization:
@@ -119,7 +120,8 @@ def main():
 
     if args.automate:
         automation = aut.AutoServer(server_url, model, sim, path_data_prediction, path_data_exclusion)
-        automation.automate(t=1200, s=50, days=args.automate[0], p_bool=args.algorithm_2.args)
+
+        automation.automate(t=1200, s=50, days=args.automate[0], p_bool=args.algorithm_2, algo=args.algorithm_1)
 
 
 if __name__ == "__main__":

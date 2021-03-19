@@ -159,5 +159,6 @@ class Similarity:
         df["Tokenized_sents"] = df["Full Text"].apply(nltk.sent_tokenize)
         df["Tokenized_sents"] = df["Tokenized_sents"].apply(pp.clean_text_from_text)
         df["Average_vector"] = df["Tokenized_sents"].apply(self.sentence_to_avg)
+        logging.info("The sample size is: {}".format(df.shape[0]))
 
         self.df = df

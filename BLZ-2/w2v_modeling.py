@@ -62,7 +62,7 @@ class W2V:
     def fit(self, m, n, s, t, epochs=3):
 
         """:params m, n, s, t: w2v's model parameters.
-        epochs: training epochs over the LivingDocs' database."""
+        epochs: training epochs over the Livingdocs' database."""
 
         self.model = Word2Vec(size=m, window=n, min_count=s, workers=t)
         self.model_name = "model_" + time.strftime("%Y-%m-%d-%H:%M:%S", time.gmtime())
@@ -79,27 +79,26 @@ class W2V:
 
         self.model.build_vocab(sent_ite_vocabulary)
 
-        # train over LivingDocs
-        logging.info("training algorithm: LivingDocs database")
+        # Train over Livingdocs' database.
+        logging.info("training algorithm: Livingdocs database")
         logging.info("training phase: ")
         for i in range(self.epochs):
 
-            # try to fix the pymongo.error, OperationFailure.
+            # Try to fix the pymongo.error, OperationFailure.
             while True:
                 i = 0
                 try:
                     sent_ite_train = iter(self.IterMong(self.L2M.find().sort([("id", -1)])))
                     break
                 except Exception:
-                    logging.warning("an exception due to pymongo.errors")
+                    logging.warning("exception due to pymongo.errors")
                     time.sleep(50)
                     sent_ite_train = iter(self.IterMong(self.L2M.find().sort([("id", -1)])))
                     i+=1
                     if i == 5: 
                         raise ConnectionError('pymongo.errors')
 
-            #self.model.train(sent_ite_train, total_examples=self.L2M.count_documents({})*36, epochs=1)
-            self.model.train(sent_ite_train, total_examples=int(client.Livingdocs.articles_sqlike.find( { }).count()*32.5), epochs=1)
+            self.model.train(sent_ite_train, total_examples=int(client.Livingdocs.articles_sqlike.find({}).count()*32.5), epochs=1)
 
         self.model.save(self.model_path)
 

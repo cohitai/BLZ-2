@@ -2,7 +2,7 @@ import requests
 import logging
 import time
 import pickle
-
+import LSH as localhash
 
 class AutoServer:
 
@@ -14,7 +14,7 @@ class AutoServer:
         self.model = model
         self.similarity = similarity
 
-    def automate(self, s, t, p_bool=False, days=30):
+    def automate(self, s, t, p_bool=False, algo=False, days=30):
         logging.info("Starting automation:")
         cnt = 1
         while True:
@@ -29,11 +29,18 @@ class AutoServer:
             self.similarity.create_test_df_sample(days, self.path_exclusion)
 
             # create a json file for prediction
-            pickle.dump(self.similarity.predict(k=6), open(self.path_prediction + 'model.pkl', 'wb'))
+            if not algo:
+                pickle.dump(self.similarity.predict(k=6), open(self.path_prediction + 'model.pkl', 'wb'))
+            else:
+                LSH = localhash.LSH(self.similarity.df, self.model.model)
+                LSH.make_hush_tables()
+                LSH.make_recommendations()
+                pickle.dump(LSH.make_recommendations(), open(self.path_prediction + 'model.pkl', 'wb'))
+
             if p_bool:
                 files = {'file': open(self.path_prediction + 'model.pkl', 'rb')}
                 # post
-                r = requests.post(self.server_name+"/uploader", files=files)
+                r = requests.post(self.server_name + "/uploader", files=files)
                 logging.info(r.text)
 
             cnt += 1
