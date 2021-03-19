@@ -34,7 +34,6 @@ class AutoServer:
             else:
                 LSH = localhash.LSH(self.similarity.df, self.model.model)
                 LSH.make_hush_tables()
-                LSH.make_recommendations()
                 pickle.dump(LSH.make_recommendations(), open(self.path_prediction + 'model.pkl', 'wb'))
 
             if p_bool:
