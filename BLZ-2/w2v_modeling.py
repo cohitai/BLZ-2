@@ -86,7 +86,7 @@ class W2V:
 
             # Try to fix the pymongo.error, OperationFailure.
             while True:
-                i = 0
+                j = 0
                 try:
                     sent_ite_train = iter(self.IterMong(self.L2M.find().sort([("id", -1)])))
                     break
@@ -94,8 +94,8 @@ class W2V:
                     logging.warning("exception due to pymongo.errors")
                     time.sleep(50)
                     sent_ite_train = iter(self.IterMong(self.L2M.find().sort([("id", -1)])))
-                    i+=1
-                    if i == 5: 
+                    j+=1
+                    if j == 5: 
                         raise ConnectionError('pymongo.errors')
 
             self.model.train(sent_ite_train, total_examples=int(self.L2M.find({}).count()*32.5), epochs=1)
