@@ -6,7 +6,7 @@ A. Clone the Repo.
 
 B. Docker Build.
 
-C. Lauching commands: python main.py -M 500 20 10 4 -A 30 OR Python main.py -A 30
+C. Launching commands: python main.py -M 500 20 10 4 -A 30 OR Python main.py -A 30
    
    parameters: 
                         
