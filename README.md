@@ -29,12 +29,12 @@ C. Launching commands: python main.py -M 500 10 20 4 -A <number of days> OR Pyth
                         
                         
                         
-4. On first build use the docker file with "Docker build" and replace the last CMD with the following: 
+D. On first build use the docker file with "Docker build" and replace the last CMD with the following: 
 
 
 CMD python.py -S -M 500 20 10 4 -A 50 -sg1 True -sg2 False
 
-5. Push the Image to GCP Container repos. (Docker tag, docker push). Run with GKE using the file from deployments protoypes with "kubectl apply -f <Deployment file>"
+E. Push the Image to GCP Container repos. (Docker tag, docker push). Run with GKE using the file from deployments protoypes with "kubectl apply -f <Deployment file>"
 
 Else, run on a seperate VM with Docker RUN <image>.
 
